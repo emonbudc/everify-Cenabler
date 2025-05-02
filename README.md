@@ -1,49 +1,75 @@
-# eVerify Cenabler
+# Enable Copy & Right-Click Extension
 
-This project provides scripts to enable and disable certain restrictions on web pages, such as right-click disabling, text selection, and input copy/paste restrictions. These scripts are designed to enhance user accessibility and control over web page interactions.
+A powerful Chrome extension that enables text selection, copying, and right-click functionality on websites that typically block these features.
 
 ## Features
 
-### Enable Script (`enable.js`)
-- Removes restrictions on right-click functionality.
-- Allows text selection on restricted web pages.
-- Enables copy, paste, and cut operations on input fields and text areas.
-- Provides a styled console output to indicate the enabling process.
+- **Enable Text Selection & Copy**: Removes restrictions on selecting and copying text from websites
+- **Enable Right-Click**: Restores right-click context menu functionality
+- **Per-Domain Settings**: Remembers your preferences for each website
+- **Easy Toggle Controls**: Simple interface to enable/disable features individually or all at once
+- **Non-Intrusive**: Only activates when you choose to enable it
+- **Instant Effect**: Works immediately without page refresh in most cases
 
-### Disable Script (`disable.js`)
-- Restores default restrictions on right-click functionality.
-- Disables text selection on web pages.
-- Disables copy, paste, and cut operations on input fields and text areas.
-- Provides a styled console output to indicate the disabling process.
+## Installation
+
+1. Download or clone this repository
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable "Developer mode" in the top-right corner
+4. Click "Load unpacked" and select the extension directory
 
 ## Usage
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/emonbaluahat/everify-Cenabler.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd everify-Cenabler
-   ```
-3. Use the `enable.js` script to remove restrictions or the `disable.js` script to restore them.
+1. Click the extension icon in your browser toolbar to open the popup
+2. Toggle individual features:
+   - Use "Enable Copy" to allow text selection and copying
+   - Use "Enable Right-Click" to allow context menus and inspection
+3. Click "Enable All" to activate all features at once
+4. Your settings are automatically saved per domain
 
-## How to Run
+## Technical Details
 
-### Enable Script
-Include the `enable.js` script in your project or execute it in the browser console to enable unrestricted interactions on the web page.
+The extension works by:
+- Removing event listeners that block copying and context menus
+- Overriding CSS properties that prevent text selection
+- Using a MutationObserver to maintain functionality when page content changes
+- Storing per-domain settings in Chrome's local storage
 
-### Disable Script
-Include the `disable.js` script in your project or execute it in the browser console to restore default restrictions on the web page.
+## Files Structure
+
+```
+├── manifest.json        # Extension configuration
+├── popup.html          # Extension popup interface
+├── popup.js           # Popup functionality
+├── content.js         # Content script for page modification
+├── background.js      # Background service worker
+└── icons/             # Extension icons
+    ├── icon16.png
+    ├── icon48.png
+    └── icon128.png
+```
+
+## Permissions
+
+This extension requires:
+- `activeTab`: To modify the current webpage
+- `storage`: To save per-domain settings
+- `<all_urls>`: To work on any website
+
+## Development
+
+To modify or enhance the extension:
+1. Make your changes to the relevant files
+2. Reload the extension in `chrome://extensions/`
+3. Test the changes on various websites
+
+## Troubleshooting
+
+If the extension doesn't work on a particular site:
+1. Try refreshing the page
+2. Make sure both features are enabled
+3. Check if the site uses advanced protection methods
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request for any improvements or new features.
-
-## Author
-
-[Emon](https://github.com/emonbaluahat)
+This project is open source and available for modification and distribution.
