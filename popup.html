@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enable Copy & Right-Click</title>
+  <style>
+    body {
+      width: 320px;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .header {
+      background-color: #4285f4;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      margin-right: 12px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 500;
+    }
+    .content {
+      padding: 20px;
+    }
+    .status {
+      font-size: 14px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+    .status.active {
+      color: #0f9d58;
+    }
+    .status.inactive {
+      color: #777;
+    }
+    .status.not-available {
+      color: #f4b400;
+    }
+    .status-icon {
+      margin-right: 8px;
+      font-size: 16px;
+      width: 16px;
+      text-align: center;
+    }
+    .options {
+      margin-bottom: 20px;
+    }
+    .option-group {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: all 0.2s ease;
+    }
+    .option-group:hover {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+    }
+    .option-icon {
+      margin-right: 12px;
+      font-size: 18px;
+      color: #4285f4;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .option-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #4285f4;
+    }
+    .option-text {
+      flex: 1;
+    }
+    .option-title {
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    .option-desc {
+      font-size: 12px;
+      color: #777;
+    }
+    .toggle-container {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+    .toggle-checkbox {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .3s;
+      border-radius: 22px;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    .toggle-checkbox:checked + .toggle-slider {
+      background-color: #4285f4;
+    }
+    .toggle-checkbox:checked + .toggle-slider:before {
+      transform: translateX(18px);
+    }
+    .toggle-all {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+    .toggle-all:hover {
+      background-color: #3367d6;
+    }
+    .toggle-all.disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .button-icon {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .button-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+    .info {
+      font-size: 12px;
+      color: #777;
+      margin-top: 15px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .toggle-all-text {
+      font-weight: 500;
+    }
+    .svg-icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icons/icon48.png" alt="Logo" class="logo">
+    <h1>Ultra Copier</h1>
+  </div>
+  
+  <div class="content">
+    <div id="status" class="status inactive">
+      <span class="status-icon" id="statusIconContainer">
+        <svg class="svg-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" fill="currentColor"/>
+        </svg>
+      </span>
+      <span id="statusText">Checking status...</span>
+    </div>
+    
+    <div class="options">
+      <div class="option-group">
+        <div class="option-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+          </svg>
+        </div>
+        <div class="option-text">
+          <div class="option-title">Enable Copy</div>
+          <div class="option-desc">Allow text selection and copying on this website</div>
+        </div>
+        <label class="toggle-container">
+          <input type="checkbox" id="copyToggle" class="toggle-checkbox">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="option-group">
+        <div class="option-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M13.75 7h-3.5C9.04 7 8.12 8.04 8.37 9.17l.89 5c.2.9 1 1.83 2.49 1.83h3.5c1.5 0 2.29-.93 2.49-1.83l.89-5C18.88 8.04 17.96 7 16.75 7zm.44 2c-.33 0-.59-.27-.59-.6 0-.33.26-.6.59-.6.33 0 .59.27.59.6 0 .33-.26.6-.59.6zM11.75 7h-1V5c0-.55.45-1 1-1s1 .45 1 1v2h-1z"/>
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H4V4h16v16z"/>
+          </svg>
+        </div>
+        <div class="option-text">
+          <div class="option-title">Enable Right-Click</div>
+          <div class="option-desc">Allow context menus and inspection</div>
+        </div>
+        <label class="toggle-container">
+          <input type="checkbox" id="inspectToggle" class="toggle-checkbox">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    
+    <button id="toggleAllButton" class="toggle-all">
+      <span class="button-icon" id="buttonIconContainer">
+        <svg class="svg-icon" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </span>
+      <span id="toggleAllText" class="toggle-all-text">Enable All</span>
+    </button>
+    
+    <div class="info">
+      If you find any site where it doesn't work, try refreshing the page.
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 
