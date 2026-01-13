@@ -10,6 +10,7 @@ A powerful Chrome extension that enables text selection, copying, and right-clic
 - **Easy Toggle Controls**: Simple interface to enable/disable features individually or all at once
 - **Non-Intrusive**: Only activates when you choose to enable it
 - **Instant Effect**: Works immediately without page refresh in most cases
+- **Enable Copy Pasting**: Enable Copying and pasting on form
 
 ## Installation
 
@@ -71,5 +72,6 @@ If the extension doesn't work on a particular site:
 3. Check if the site uses advanced protection methods
 
 ## License
+
 
 This project is open source and available for modification and distribution.
