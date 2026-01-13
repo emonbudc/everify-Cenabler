@@ -28,9 +28,10 @@
             document.head.appendChild(styleElement);
         }
         
-        // Enable copy/cut
+        // Enable copy/cut/paste
         document.oncopy = null;
         document.oncut = null;
+        document.onpaste = null;
     }
     
     // Function to disable text selection enhancement
@@ -63,7 +64,7 @@
     // Function to disable common copy prevention techniques
     function enableCopyEvents() {
         // Prevent common copy prevention events
-        ['copy', 'cut', 'selectstart', 'mousedown', 'mouseup'].forEach(function(event) {
+        ['copy', 'cut', 'paste', 'selectstart', 'mousedown', 'mouseup'].forEach(function(event) {
             document.documentElement.addEventListener(event, stopPropagation, true);
         });
         
@@ -86,7 +87,7 @@
     
     // Function to remove copy prevention overrides
     function disableCopyEvents() {
-        ['copy', 'cut', 'selectstart', 'mousedown', 'mouseup'].forEach(function(event) {
+        ['copy', 'cut', 'paste', 'selectstart', 'mousedown', 'mouseup'].forEach(function(event) {
             document.documentElement.removeEventListener(event, stopPropagation, true);
         });
     }
@@ -174,4 +175,47 @@
             }
         }
     });
+
+    // Enable paste & copy for specific element #ubrn
+    function enablePasteForUBRN() {
+        const el = document.getElementById('ubrn');
+        if (!el) {
+            // Retry after a short delay if element not found
+            setTimeout(enablePasteForUBRN, 500);
+            return;
+        }
+
+        // Remove inline event blockers
+        el.onpaste = null;
+        el.oncopy = null;
+        el.oncut = null;
+
+        // Remove attributes if present
+        el.removeAttribute('onpaste');
+        el.removeAttribute('oncopy');
+        el.removeAttribute('oncut');
+
+        // Add paste event listener to allow paste
+        el.addEventListener('paste', function(e) {
+            e.stopPropagation();
+            return true;
+        }, true);
+
+        // Allow copy/cut
+        el.addEventListener('copy', function(e) {
+            e.stopPropagation();
+            return true;
+        }, true);
+
+        el.addEventListener('cut', function(e) {
+            e.stopPropagation();
+            return true;
+        }, true);
+
+        console.log('Paste & copy enabled for #ubrn');
+    }
+
+    // Run immediately and with a slight delay for dynamic elements
+    enablePasteForUBRN();
+    setTimeout(enablePasteForUBRN, 1000);
 })(); 
